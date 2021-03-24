@@ -5,11 +5,12 @@
         
         const from:number=getData.data.quotes[`USD${fromCurrency}`];
         const to:number=getData.data.quotes[`USD${toCurrency}`];
-        return new Promise<number>((resolve,reject)=>{
-            if(from!==NaN && to!==NaN)
-            resolve((to/from)*amount);
-            else
-            reject(-1);
-        })
         
+        //return (from===NaN || from===undefined || isNaN(to) || isNaN(amount)) ? -1 : ((to/from)*amount);
+       return new Promise<number>((resolve,reject)=>{
+           if(from!==NaN && to!==NaN && amount!==NaN)
+           resolve((to/from)*amount);
+           else
+           reject(()=>-1);
+       })
     }
