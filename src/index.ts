@@ -25,7 +25,9 @@ const axios= require("axios");
             alert("Niste popunili sva polja!");
             return;
         }
-
+        fromCurrInput.value=fromCurrInput.value.toUpperCase();
+        toCurrInput.value= toCurrInput.value.toUpperCase();
+        
         conversionResultLbl.innerHTML="";
         firstCountryLbl.innerHTML="Countries where you can use ";
         secondCountryLbl.innerHTML="Countries where you can use ";
