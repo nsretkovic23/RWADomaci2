@@ -1,79 +1,61 @@
-import {taskList } from "./taskList";
-import { task } from "./task";
+import { convert } from "./convert";
 
-//let kalendar=new taskList(20, document.body);
+const axios= require("axios");
 
+//console.log("proba");
 
+const srbija = async ()  => {
+    const zemlja = await axios.get('https://restcountries.com/v2/currency/usd');
 
-const createDiv:HTMLDivElement=document.createElement("div");
-createDiv.classList.add("createSection");
-document.body.appendChild(createDiv);
-
-const createTaskListDiv:HTMLDivElement=document.createElement("div");
-createTaskListDiv.classList.add("createTaskList");
-createDiv.appendChild(createTaskListDiv);
-
-const createTaskListLbl:HTMLLabelElement=document.createElement("label");
-createTaskListLbl.innerHTML="Pick date";
-createTaskListDiv.appendChild(createTaskListLbl);
-
-const dateInput:HTMLInputElement=document.createElement("input");
-dateInput.type="date";
-dateInput.style.marginBottom="5px";
-dateInput.style.marginTop="5px";
-createTaskListDiv.appendChild(dateInput);
+   console.log(zemlja.data[0].name);
+   console.log(zemlja.data[0].currencies[0].code);
+}
 
 
-const descLbl:HTMLLabelElement=document.createElement("label");
-descLbl.innerHTML="Enter short description:";
-createTaskListDiv.appendChild(descLbl);
+    const fromLbl=document.createElement("label");
+    fromLbl.innerHTML=" From: ";
+    document.body.appendChild(fromLbl);
+    const fromCurrencyInput=document.createElement("input");
+    fromCurrencyInput.maxLength=3; 
+    document.body.appendChild(fromCurrencyInput);
 
+    const toLbl=document.createElement("label");
+    toLbl.innerHTML=" To: ";
+    document.body.appendChild(toLbl);
+    const toCurrencyInput = document.createElement("input");
+    toCurrencyInput.maxLength=3;
+    document.body.appendChild(toCurrencyInput);
 
+    const amountLbl=document.createElement("label");
+    amountLbl.innerHTML=" Amount: ";
+    document.body.appendChild(amountLbl);
+    const amountInput = document.createElement("input");
+    amountInput.type="number";
+    amountInput.min="1";
+    amountInput.maxLength=6;
+    document.body.appendChild(amountInput);
 
-const descInput:HTMLTextAreaElement=document.createElement("textarea");
-descInput.rows=4;
-descInput.cols=30;
-descInput.style.marginTop="5px";
-descInput.style.marginBottom="5px";
-createTaskListDiv.appendChild(descInput);
+    const convertButton=document.createElement("button");
+    convertButton.innerHTML="Convert";
+    document.body.appendChild(convertButton);
 
-const createtaskListBtn:HTMLButtonElement=document.createElement("button");
-createtaskListBtn.innerHTML="Create";
-createTaskListDiv.appendChild(createtaskListBtn);
+    let resultLbl=document.createElement("label");
+    
+    document.body.appendChild(resultLbl);
 
-const testDrawAllTasksBtn:HTMLButtonElement=document.createElement("button");
-testDrawAllTasksBtn.innerHTML="Test - Redraw all";
-testDrawAllTasksBtn.style.marginTop="5px";
-createTaskListDiv.appendChild(testDrawAllTasksBtn);
-
-const tasksDiv:HTMLDivElement=document.createElement("div");
-tasksDiv.classList.add("taskView");
-document.body.appendChild(tasksDiv);
-
-let _taskList=new taskList(tasksDiv);
-
-createtaskListBtn.onclick=(ev:MouseEvent)=>{
-    if(descInput.value==="" || dateInput.value==="")
-    {
-        alert("Enter all informations");
-        return;
+    convertButton.onclick=(ev) =>{
+        resultLbl.innerHTML="";
+        const result= convert(fromCurrencyInput.value, toCurrencyInput.value, parseInt(amountInput.value));
+        result.then((num:number)=>{resultLbl.innerHTML+=num;}).catch((numb:number)=>{resultLbl.innerHTML+=numb;});
+        console.log(result); //reject/catch not working, finish countries where u can use currency
+        
     }
-    _taskList.drawTile(new task(descInput.value, dateInput.value));
-}
-
-testDrawAllTasksBtn.onclick=(ev:MouseEvent)=>{
-    _taskList.drawAllTasks();
-}
 
 
 
 
 
+//srbija();
 
 
-
-
-
-
-
-
+//fullname();
