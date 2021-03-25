@@ -4,7 +4,7 @@ import { drawDoc } from "./drawDoc"
 
 const axios= require("axios");
 
-    //editable elements
+    
     let fromCurrInput:HTMLInputElement=document.createElement("input");
     let toCurrInput:HTMLInputElement=document.createElement("input");
     let amntInput:HTMLInputElement=document.createElement("input");
@@ -48,7 +48,7 @@ const axios= require("axios");
                 firstCountryLbl.innerHTML+=`${cntry}, `;
             })
         })
-        .catch((msg)=>firstCountryLbl.innerHTML="Error no currency found");
+        .catch((msg)=>firstCountryLbl.innerHTML="Error country not found");
 
         country(toCurrInput.value).then((countries)=>
         {
@@ -57,7 +57,7 @@ const axios= require("axios");
                 secondCountryLbl.innerHTML+=`${cntry}, `;
             })
         })
-        .catch((msg)=>secondCountryLbl.innerHTML="Error no currency found");
+        .catch((msg)=>secondCountryLbl.innerHTML="Error country not found");
 
         console.log("after");
     }
